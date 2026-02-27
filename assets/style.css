@@ -89,10 +89,10 @@ body {
 	width: 80%;
 	font-size: 14px;
 }
-
-#gallery {
-	/*	min-height: 100vh; */
+.carousel-item.active {
+    display: block !important; 
 }
+
 .title{
 	text-align: center;
 	padding-block: 2em;
@@ -101,8 +101,8 @@ body {
 	justify-content: center;
 }
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-	color: #fff;
-	background-color: #BEB45A;
+	color: black;
+	background-color: #FFD700;
 	border-radius:0 ;
 }
 .nav-pills .nav-link {
