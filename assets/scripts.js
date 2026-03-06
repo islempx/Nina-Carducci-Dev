@@ -16,6 +16,9 @@
 const buttons = document.querySelectorAll(".filters button");
 const images = document.querySelectorAll(".gallery img");
 
+let currentIndex = 0;
+let visibleImages = [];
+
 buttons.forEach(button => {
   button.addEventListener("click", () => {
     buttons.forEach(btn => btn.classList.remove("active"));
@@ -30,8 +33,15 @@ buttons.forEach(button => {
         img.style.display = "none";
       }
     });
+
+    updateVisibleImages();
   });
 });
+
+function updateVisibleImages() {
+  visibleImages = Array.from(document.querySelectorAll(".gallery img"))
+    .filter(img => img.style.display !== "none");
+}
 
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.querySelector(".lightbox-img");
@@ -39,13 +49,13 @@ const closeBtn = document.querySelector(".lightbox-close");
 const prevBtn = document.querySelector(".lightbox-prev");
 const nextBtn = document.querySelector(".lightbox-next");
 
-let currentIndex = 0;
-
-const imageArray = Array.from(document.querySelectorAll(".gallery img"));
-
-imageArray.forEach((img, index) => {
+images.forEach((img) => {
   img.addEventListener("click", () => {
-    currentIndex = index;
+
+    updateVisibleImages();
+
+    currentIndex = visibleImages.indexOf(img);
+
     lightbox.style.display = "flex";
     lightboxImg.src = img.src;
   });
@@ -56,13 +66,13 @@ closeBtn.addEventListener("click", () => {
 });
 
 prevBtn.addEventListener("click", () => {
-  currentIndex = (currentIndex - 1 + imageArray.length) % imageArray.length;
-  lightboxImg.src = imageArray[currentIndex].src;
+  currentIndex = (currentIndex - 1 + visibleImages.length) % visibleImages.length;
+  lightboxImg.src = visibleImages[currentIndex].src;
 });
 
 nextBtn.addEventListener("click", () => {
-  currentIndex = (currentIndex + 1) % imageArray.length;
-  lightboxImg.src = imageArray[currentIndex].src;
+  currentIndex = (currentIndex + 1) % visibleImages.length;
+  lightboxImg.src = visibleImages[currentIndex].src;
 });
 
 lightbox.addEventListener("click", (e) => {
